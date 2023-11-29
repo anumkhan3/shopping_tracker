@@ -1,0 +1,9 @@
+<!-- tracker/templates/tracker/add_expense.html -->
+
+<h1>Add Expense to {{ shopping_list.name }}</h1>
+<form method="post" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Expense</button>
+</form>
+<a href="{% url 'shopping_list' %}">Back to Shopping Lists</a>

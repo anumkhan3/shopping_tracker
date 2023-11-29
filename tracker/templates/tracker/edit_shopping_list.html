@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Shopping List</title>
+</head>
+<body>
+    <h1>Edit Shopping List</h1>
+    <form method="post" action="">
+        {% csrf_token %}
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="{{ shopping_list.name }}" required>
+        <button type="submit">Save</button>
+    </form>
+    <a href="{% url 'shopping_list' %}">Back to Shopping Lists</a>
+</body>
+</html>
+
+

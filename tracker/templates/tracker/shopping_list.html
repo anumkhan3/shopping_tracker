@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Lists</title>
+</head>
+<body>
+    <h1>Shopping Lists</h1>
+    {% for shopping_list in shopping_lists %}
+        <p>
+            {{ shopping_list.name }} -
+            <a href="{% url 'edit_shopping_list' shopping_list.pk %}">Edit</a> -
+            <a href="{% url 'delete_shopping_list' shopping_list.pk %}">Delete</a> -
+            <a href="{% url 'add_expense' shopping_list.pk %}">Add Expense</a>
+        </p>
+    {% endfor %}
+
+    <a href="{% url 'create_shopping_list' %}">Create Shopping List</a>
+</body>
+</html>
+
