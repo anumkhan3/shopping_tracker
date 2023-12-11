@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Shopping List</title>
-</head>
-<body>
+<!-- tracker/templates/tracker/create_shopping_list.html -->
+
+{% extends "tracker/base.html" %}
+
+{% block title %}Create Shopping List{% endblock %}
+
+{% block content %}
     <h1>Create Shopping List</h1>
     <form method="post" action="">
         {% csrf_token %}
@@ -14,8 +13,9 @@
         <button type="submit">Create</button>
     </form>
     <a href="{% url 'shopping_list' %}">Back to Shopping Lists</a>
-</body>
-</html>
+{% endblock %}
+
+
 
 
 

@@ -6,4 +6,4 @@ from .models import ShoppingList, Expense
 class ExpenseForm(forms.ModelForm):
     class Meta:
         model = Expense
-        fields = ['amount', 'description']
+        fields = ['amount', 'description', 'image']

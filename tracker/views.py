@@ -1,13 +1,16 @@
-from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
-from .models import ShoppingList, Expense
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import ShoppingList
 from .forms import ExpenseForm
 
 def home(request):
-    return redirect('shopping_list')
-
+   if request.user.is_authenticated:
+       return redirect('shopping_list')
+   else:
+       return redirect('login')
 def favicon(request):
-    # You can either return an empty response or serve an actual favicon.ico file.
     return HttpResponse(status=204)
 
 def shopping_list_view(request):
@@ -40,7 +43,7 @@ def add_expense(request, shopping_list_id):
     shopping_list = get_object_or_404(ShoppingList, pk=shopping_list_id)
 
     if request.method == 'POST':
-        form = ExpenseForm(request.POST)
+        form = ExpenseForm(request.POST, request.FILES)
         if form.is_valid():
             expense = form.save(commit=False)
             expense.shopping_list = shopping_list
@@ -51,4 +54,14 @@ def add_expense(request, shopping_list_id):
 
     return render(request, 'tracker/add_expense.html', {'form': form, 'shopping_list': shopping_list})
 
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+            return redirect('shopping_list')
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/register.html', {'form': form})
 

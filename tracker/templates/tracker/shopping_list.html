@@ -1,22 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Lists</title>
-</head>
-<body>
+<!-- tracker/templates/tracker/shopping_list.html -->
+
+{% extends "tracker/base.html" %}
+
+{% block title %}Shopping Lists{% endblock %}
+
+{% block content %}
     <h1>Shopping Lists</h1>
     {% for shopping_list in shopping_lists %}
         <p>
             {{ shopping_list.name }} -
+            Total Cost: {{ shopping_list.calculate_total_cost|default:"N/A" }} -
             <a href="{% url 'edit_shopping_list' shopping_list.pk %}">Edit</a> -
             <a href="{% url 'delete_shopping_list' shopping_list.pk %}">Delete</a> -
             <a href="{% url 'add_expense' shopping_list.pk %}">Add Expense</a>
+
+            <!-- Display expenses for the current shopping list -->
+            {% for expense in shopping_list.expenses.all %}
+                <div>
+                    Amount: {{ expense.amount }} -
+                    Description: {{ expense.description }} -
+                    {% if expense.image %}
+                        <img src="{{ expense.image.url }}" alt="Expense Image" style="max-width: 100px; max-height: 100px;">
+                    {% else %}
+                        No Image
+                    {% endif %}
+                </div>
+            {% endfor %}
         </p>
     {% endfor %}
 
     <a href="{% url 'create_shopping_list' %}">Create Shopping List</a>
-</body>
-</html>
+    <a href="{% url 'register' %}">Register</a>
+{% endblock %}
+
+
+
+
+
 
